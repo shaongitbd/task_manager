@@ -1,0 +1,16 @@
+{
+  "name": "FocusForge",
+  "short_name": "FocusForge",
+  "description": "ADHD-friendly task manager that keeps you focused",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#f59e0b",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

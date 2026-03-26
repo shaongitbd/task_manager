@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+
+  --color-forge-950: #0f0d0b;
+  --color-forge-900: #1a1714;
+  --color-forge-850: #221f1b;
+  --color-forge-800: #2c2822;
+  --color-forge-750: #36312a;
+  --color-forge-700: #443e35;
+  --color-forge-600: #7a7168;
+  --color-forge-500: #857a6d;
+  --color-forge-400: #a79d91;
+  --color-forge-300: #c9c1b6;
+  --color-forge-200: #e2ddd6;
+  --color-forge-100: #f0ede9;
+  --color-forge-50: #faf8f5;
+
+  --color-ember: #e8930a;
+  --color-ember-bright: #f6b93b;
+  --color-ember-dim: #9e6a10;
+  --color-ember-glow: #e8930a33;
+
+  /* ADHD-friendly priority colors: calmer, less anxiety-inducing */
+  /* Urgent: warm coral instead of aggressive red */
+  --color-heat: #d4705a;
+  --color-heat-surface: #d4705a1a;
+  /* Success: softer teal-green, calming */
+  --color-cool: #3a9e7e;
+  --color-cool-surface: #3a9e7e1a;
+  /* Normal: calm blue */
+  --color-steel: #5b9fd4;
+  --color-steel-surface: #5b9fd41a;
+  /* Low: warm muted */
+  --color-ash: #8a837c;
+  --color-ash-surface: #8a837c1a;
+
+  /* Goal accent colors */
+  --color-goal-1: #e8930a;
+  --color-goal-2: #5b9fd4;
+  --color-goal-3: #3a9e7e;
+  --color-goal-4: #d4705a;
+  --color-goal-5: #a78bda;
+  --color-goal-6: #d4a05a;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-body);
+    background: var(--color-forge-950);
+    color: var(--color-forge-200);
+    overflow-x: hidden;
+  }
+
+  #root {
+    min-height: 100dvh;
+    display: flex;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-forge-700);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-forge-600);
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-forge-700) transparent;
+  }
+
+  /* Dark select/option styling */
+  select option {
+    background: var(--color-forge-850);
+    color: var(--color-forge-200);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-ember);
+    color: var(--color-forge-950);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Priority left-border utilities */
+@utility priority-urgent {
+  border-left: 3px solid var(--color-heat);
+}
+@utility priority-high {
+  border-left: 3px solid var(--color-ember);
+}
+@utility priority-normal {
+  border-left: 3px solid var(--color-steel);
+}
+@utility priority-low {
+  border-left: 3px solid var(--color-ash);
+}
+
+/* Heat pulse animation */
+@keyframes heat-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@utility animate-heat {
+  animation: heat-pulse 3s ease-in-out infinite;
+}

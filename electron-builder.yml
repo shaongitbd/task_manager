@@ -1,0 +1,21 @@
+appId: com.focusforge.app
+productName: FocusForge
+directories:
+  buildResources: build
+  output: release
+files:
+  - dist/**/*
+  - electron/**/*
+  - public/favicon.svg
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: public/favicon.svg
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
