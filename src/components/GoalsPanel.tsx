@@ -14,7 +14,6 @@ export function GoalsPanel() {
   const goals = useTaskStore((s) => s.goals)
   const tasks = useTaskStore((s) => s.tasks)
   const addGoal = useTaskStore((s) => s.addGoal)
-  const updateGoal = useTaskStore((s) => s.updateGoal)
   const deleteGoal = useTaskStore((s) => s.deleteGoal)
   const completeGoal = useTaskStore((s) => s.completeGoal)
   const updateTask = useTaskStore((s) => s.updateTask)

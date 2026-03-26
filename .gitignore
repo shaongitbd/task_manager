@@ -10,6 +10,10 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+build
+release
+out
+android/app/build
 *.local
 
 # Editor directories and files

@@ -72,6 +72,10 @@ export async function fetchTasksFromCloud(): Promise<Task[] | null> {
       completedAt: row.completed_at,
       focusedAt: row.focused_at,
       scheduledDate: row.scheduled_date,
+      startTime: null,
+      endTime: null,
+      goalId: null,
+      subtasks: [],
       order: row.task_order,
       synced: true,
     }))

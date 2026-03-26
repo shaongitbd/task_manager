@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { StickyNote, ArrowRight, Trash2, ListTodo } from 'lucide-react'
+import { StickyNote, Trash2, ListTodo } from 'lucide-react'
 import { useTaskStore } from '@/stores/taskStore'
 import { format } from 'date-fns'
 
