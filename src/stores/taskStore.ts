@@ -59,13 +59,17 @@ interface TaskState {
   setView: (view: TaskState['view']) => void
 }
 
+const env = import.meta.env as Record<string, string | undefined>
+const envSupabaseUrl = env.VITE_SUPABASE_URL?.trim() ?? ''
+const envSupabaseKey = env.VITE_SUPABASE_ANON_KEY?.trim() ?? ''
+
 const defaultSettings: Settings = {
   nagIntervalMinutes: 3,
   soundEnabled: true,
   notificationsEnabled: true,
   nagStyle: 'firm',
-  supabaseUrl: '',
-  supabaseKey: '',
+  supabaseUrl: envSupabaseUrl,
+  supabaseKey: envSupabaseKey,
   syncEnabled: false,
   darkMode: true,
   showCompletedTasks: false,

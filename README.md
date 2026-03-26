@@ -1,74 +1,129 @@
-# React + TypeScript + Vite
+# FocusForge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ADHD-friendly task manager designed to reduce decision fatigue and keep momentum.
 
-Currently, two official plugins are available:
+## Why this project exists
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+FocusForge is built for people who struggle with attention drift, task paralysis, and constant context switching (especially ADHD brains). The goal is to make starting and finishing work easier by reducing choices, nudging focus, and keeping the interface simple enough to stay in flow.
 
-## React Compiler
+## What it does
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Single-task focus flow** with reminders (gentle, firm, aggressive)
+- **Smart “Pick for me”** task selection to lower startup friction
+- **Weekly planner** with scheduled tasks
+- **Goals + task linking** to keep work connected to bigger outcomes
+- **Parking Lot** for quick thought capture without context switching
+- **Focus sessions (Pomodoro-style)** with configurable work/break durations
+- **Stats view** for completed tasks and focus progress
+- **Cloud sync (optional)** via Supabase
+- **Cross-platform targets**: Web, Electron desktop (Windows build script included), and Android (Capacitor)
 
-## Expanding the ESLint configuration
+## Tech stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19 + TypeScript + Vite
+- Zustand (persisted local state)
+- Tailwind CSS v4
+- Framer Motion
+- Supabase (optional sync)
+- Electron + electron-builder
+- Capacitor (Android)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js 20+
+- npm
+- For Android: Android Studio + Android SDK
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting started
+
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Vite dev server runs at `http://localhost:5173` by default.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `npm run dev` — run web app in development
+- `npm run dev:electron` — run Vite + Electron together
+- `npm run build` — type-check + build web bundle
+- `npm run build:electron` — build desktop app (Windows target)
+- `npm run build:android` — build web assets and sync Capacitor Android project
+- `npm run lint` — run ESLint
+- `npm run preview` — preview production build locally
+
+## Desktop (Electron)
+
+Development:
+
+```bash
+npm run dev:electron
 ```
-"# task_manager" 
+
+Production build (Windows):
+
+```bash
+npm run build:electron
+```
+
+## Android (Capacitor)
+
+Sync the latest web build into the Android project:
+
+```bash
+npm run build:android
+```
+
+Then open Android Studio from the `android/` project and run on emulator/device.
+
+## Optional cloud sync (Supabase)
+
+Set environment variables first:
+
+1. Copy `.env.example` to `.env`
+2. Set `VITE_SUPABASE_URL` to your Supabase project URL
+3. Add your `VITE_SUPABASE_ANON_KEY`
+
+Then configure in app **Settings**:
+
+1. Enable **Cloud Sync**
+2. Confirm Supabase URL (auto-filled from env)
+3. Confirm/paste Supabase anon key
+
+Create the table in Supabase SQL Editor:
+
+```sql
+CREATE TABLE tasks (
+  id UUID PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT DEFAULT '',
+  priority TEXT DEFAULT 'normal',
+  status TEXT DEFAULT 'pending',
+  estimated_minutes INTEGER DEFAULT 25,
+  elapsed_seconds INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  completed_at TIMESTAMPTZ,
+  focused_at TIMESTAMPTZ,
+  scheduled_date DATE,
+  task_order INTEGER DEFAULT 0
+);
+
+ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+```
+
+## Project structure
+
+- `src/components` — UI components and panels
+- `src/stores/taskStore.ts` — app state, actions, persisted settings
+- `src/hooks/useNagger.ts` — reminder/nag behavior
+- `src/hooks/useSync.ts` — Supabase sync orchestration
+- `src/lib` — notifications, sounds, Supabase client utilities
+- `electron/` — desktop entry + preload
+- `android/` — Capacitor Android project
+
+## Notes
+
+- Data is stored locally via persisted Zustand state by default.
+- Notification behavior depends on platform permission settings.
+- Cloud sync is optional and off by default.
